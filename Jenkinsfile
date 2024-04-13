@@ -15,11 +15,9 @@ pipeline {
                     docker.image("${DOCKER_IMAGE}").pull()
 
                     // Run Flake8 to lint the code
-                    def flake8Result = docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app -v $HOME/.cache:/root/.cache') {
-                        sh 'pip install --user flake8'
-                        sh 'flake8'
-                    }
-                    
+                    sh 'pip install flake8'
+                    def flake8Result = sh 'flake8'
+
                     // Check if Flake8 passed successfully
                     if (flake8Result == 0) {
                         echo 'Flake8 passed successfully'
@@ -28,15 +26,10 @@ pipeline {
                     }
 
                     // Install Django
-                    docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app -v $HOME/.cache:/root/.cache') {
-                        sh 'pip install --user django'
-                    }
+                    sh 'pip install django'
 
                     // Run Django project
-                    docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
-                        sh 'python manage.py migrate'
-                        sh 'python manage.py runserver'
-                    }
+                    sh 'python manage.py runserver'
                 }
             }
         }
