@@ -1,4 +1,4 @@
-Python == 3.12.2
+Python
 asgiref==3.5.2
 certifi==2022.9.24
 charset-normalizer==2.1.1
