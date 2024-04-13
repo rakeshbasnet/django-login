@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = 'python:3.8' // Base Docker image with Python 3.8
+        DOCKER_IMAGE = 'python:3' // Base Docker image with Python 3.8
         PROJECT_NAME = 'django_login'
         DOCKER_REPO = 'rakeshbasnet/django-login' // Docker Hub repository name
     }
@@ -16,7 +16,7 @@ pipeline {
 
                     // Run Flake8 to lint the code
                     def flake8Result = docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
-                        sh 'pip install --user flake8'
+                        sh 'pip install flake8'
                         sh 'flake8'
                     }
                     
@@ -29,11 +29,12 @@ pipeline {
 
                     // Install Django
                     docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
-                        sh 'pip install --user django'
+                        sh 'pip install django'
                     }
 
                     // Run Django project
                     docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
+                        sh 'python manage.py migrate'
                         sh 'python manage.py runserver'
                     }
                 }
