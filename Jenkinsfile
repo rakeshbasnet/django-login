@@ -16,7 +16,7 @@ pipeline {
 
                     // Run Flake8 to lint the code
                     def flake8Result = docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
-                        sh 'pip install flake8'
+                        sh 'pip install --user flake8'
                         sh 'flake8'
                     }
                     
@@ -29,7 +29,7 @@ pipeline {
 
                     // Install Django
                     docker.image("${DOCKER_IMAGE}").inside('-v $PWD:/app') {
-                        sh 'pip install django'
+                        sh 'pip install --user django'
                     }
 
                     // Run Django project
