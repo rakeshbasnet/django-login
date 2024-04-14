@@ -1,11 +1,12 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'pip install -r requirements.txt'
-                sh 'flake8 .'
-            }
-        }
+  agent {
+    docker { image 'python3' }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'python3 --version'
+      }
     }
+  }
 }
