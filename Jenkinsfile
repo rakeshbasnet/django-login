@@ -15,10 +15,13 @@ pipeline {
                     docker.image("${DOCKER_IMAGE}").pull()
 
                     // Run Flake8 inside the Docker container
-                    def flake8Result = docker.image("${DOCKER_IMAGE}").inside("-v $PWD:${PROJECT_DIR}") {
-                        sh "pip install flake8"
-                        sh "flake8 ${PROJECT_DIR}"
+                    def flake8Result = docker.image("${DOCKER_IMAGE}").run('-v $PWD:/app') {
+                      sh 'python -m venv venv'
+                      sh 'source venv/bin/activate'
+                      sh 'pip install flake8'
+                      sh 'flake8'
                     }
+
 
                     // Check Flake8 result
                     if (flake8Result == 0) {
