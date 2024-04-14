@@ -14,6 +14,7 @@ pipeline {
                     sh '''
                     echo 'Buid Docker Image'
                     docker build -t ${DOCKER_REPO}:${BUILD_NUMBER} .
+                    echo 'Docker build successfully.'
                     '''
                 }
             }
