@@ -16,7 +16,7 @@ pipeline {
 
                     // Run Flake8 inside the Docker container
                     def flake8Result = docker.image("${DOCKER_IMAGE}").inside("-v $PWD:${PROJECT_DIR}") {
-                        sh "sudo -H pip install flake8"
+                        sh "pip install flake8"
                         sh "flake8 ${PROJECT_DIR}"
                     }
 
