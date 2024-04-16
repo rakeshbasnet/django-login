@@ -33,10 +33,12 @@ pipeline {
         stage('Execute Ansible Playbook') {
             steps {
                 script {
-                    sh '''
-                    ssh root@172.31.19.31
-                    ansible-playbook -i /etc/ansible/hosts /opt/ansible/deploy.yml
-                    '''
+                    ansiblePlaybook(
+                        playbook: '/path/to/your/playbook.yml',
+                        inventory: '/etc/ansible/hosts',
+                        credentialsId: 'your-ssh-credentials',
+                        extras: '-u ansible_user'
+                    )
                 }
             }
         }
