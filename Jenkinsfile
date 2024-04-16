@@ -37,7 +37,6 @@ pipeline {
                         playbook: '/opt/ansible/deploy.yml',
                         inventory: '/etc/ansible/hosts',
                         credentialsId: 'ansible-key',
-                        extras: '-u root'
                     )
                 }
             }
