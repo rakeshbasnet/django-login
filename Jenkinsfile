@@ -30,5 +30,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Execute Ansible Playbook') {
+            steps {
+                script {
+
+                    /ansiblePlaybook credentialsId: 'ansible-key', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: '/opt/ansible/deploy.yml', vaultTmpPath: ''
+                    }
+                }
+            }
+        }
     }
 }
