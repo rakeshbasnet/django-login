@@ -34,10 +34,10 @@ pipeline {
             steps {
                 script {
                     ansiblePlaybook(
-                        playbook: '/path/to/your/playbook.yml',
+                        playbook: '/opt/ansible/deploy.yml',
                         inventory: '/etc/ansible/hosts',
-                        credentialsId: 'your-ssh-credentials',
-                        extras: '-u ansible_user'
+                        credentialsId: 'ansible-key',
+                        extras: '-u root'
                     )
                 }
             }
