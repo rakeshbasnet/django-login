@@ -43,7 +43,7 @@ pipeline {
                     def sshOptions = "-o StrictHostKeyChecking=no -i ${privateKey}"
 
                     // Run ansible-playbook using SSH
-                    sh "ssh ${username}@${remoteServer} ansible-playbook ${playbookPath}"
+                    sh "ssh ${sshOptions} ${username}@${remoteServer} ansible-playbook ${playbookPath}"
                 }
             }
         }
