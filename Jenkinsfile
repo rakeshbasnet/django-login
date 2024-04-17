@@ -30,14 +30,11 @@ pipeline {
                 }
             }
         }
-        stage('Execute Ansible Playbook') {
+        stage('Trigger ansible Playbook Trigger Job') {
             steps {
                 script {
-                    ansiblePlaybook(
-                        playbook: '/opt/ansible/deploy.yml',
-                        inventory: '/etc/ansible/hosts',
-                        credentialsId: 'ansible-key',
-                    )
+                    // Trigger ansible playbook trigger job using build step
+                    build job: 'ansible-job-trigger'
                 }
             }
         }
