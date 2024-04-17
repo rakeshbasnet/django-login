@@ -36,14 +36,14 @@ pipeline {
                     // Define details of the remote Ansible server
                     def remoteServer = '172.31.19.31'
                     def username = 'root'
-                    def privateKey = 'ansible-key' // Assuming SSH key authentication
+                    def privateKey = '' // Assuming SSH key authentication
                     def playbookPath = 'opt/ansible/deploy.yml' // Path on the remote server
 
                     // SSH options for secure connection
                     def sshOptions = "-o StrictHostKeyChecking=no -i ${privateKey}"
 
                     // Run ansible-playbook using SSH
-                    sh "ssh ${sshOptions} ${username}@${remoteServer} ansible-playbook ${playbookPath}"
+                    sh "ssh ${username}@${remoteServer} ansible-playbook ${playbookPath}"
                 }
             }
         }
