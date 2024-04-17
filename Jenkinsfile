@@ -20,7 +20,7 @@ pipeline {
 
                     // Run commands using SSH
                     sh """
-                        ssh ${sshOptions} ${username}@${remoteServer} << 'EOF'
+                        ssh ${username}@${remoteServer} << 'EOF'
                         ${commands}
                         EOF
                     """
