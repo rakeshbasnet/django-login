@@ -1,29 +1,40 @@
 pipeline {
     agent any
+    
+    environment {
+        DOCKER_REPO = 'rakeshbasnet/django-login' // Docker Hub repository name
+    }
 
     stages {
-        stage('Run Commands on Remote Server') {
+        
+        stage('Build Docker'){
+            steps{
+                script{
+                  // Build Docker image
+                    sh '''
+                    echo 'Buid Docker Image'
+                    docker build -t ${DOCKER_REPO}:${BUILD_NUMBER} .
+                    echo 'Docker build successfully.'
+                    '''
+                }
+            }
+        }
+        stage('Push Docker Image') {
             steps {
                 script {
-                    // Define details of the remote server
-                    def remoteServer = '172.31.19.31'
-                    def username = 'root'
-                    def privateKey = '/etc/ssh/ansible-id-rsa' // Assuming SSH key authentication
-                    def commands = """
-                        # List of commands to execute on the remote server
-                        ls -l /var/www
-                        cat /etc/os-release
-                    """
 
-                    // SSH options for secure connection
-                    def sshOptions = "-o StrictHostKeyChecking=no -i ${privateKey}"
-
-                    // Run commands using SSH
-                    sh """
-                        ssh ${username}@${remoteServer} << 'EOF'
-                        ${commands}
-                        EOF
-                    """
+                    // Push Docker image to Docker Hub
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                        docker.image("${DOCKER_REPO}:${BUILD_NUMBER}").push('latest')
+                    }
+                }
+            }
+        }
+        stage('Trigger ansible Playbook Trigger Job') {
+            steps {
+                script {
+                    // Trigger ansible playbook job using build step
+                    build job: 'ansible-playbook-trigger'
                 }
             }
         }
