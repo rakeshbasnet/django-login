@@ -8,7 +8,7 @@ pipeline {
                     // Define details of the remote server
                     def remoteServer = '172.31.19.31'
                     def username = 'root'
-                    def privateKey = 'user_management/security/ansible-id-rsa' // Assuming SSH key authentication
+                    def privateKey = '/etc/ssh/ansible-id-rsa' // Assuming SSH key authentication
                     def commands = """
                         # List of commands to execute on the remote server
                         ls -l /var/www
