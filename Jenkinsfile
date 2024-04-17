@@ -30,11 +30,20 @@ pipeline {
                 }
             }
         }
-        stage('Trigger ansible Playbook Trigger Job') {
+        stage('Run Ansible Playbook') {
             steps {
                 script {
-                    // Trigger ansible playbook trigger job using build step
-                    build job: 'ansible-job-trigger'
+                    // Define details of the remote Ansible server
+                    def remoteServer = '172.31.19.31'
+                    def username = 'root'
+                    def privateKey = 'ansible-key' // Assuming SSH key authentication
+                    def playbookPath = 'opt/ansible/deploy.yml' // Path on the remote server
+
+                    // SSH options for secure connection
+                    def sshOptions = "-o StrictHostKeyChecking=no -i ${privateKey}"
+
+                    // Run ansible-playbook using SSH
+                    sh "ssh ${sshOptions} ${username}@${remoteServer} ansible-playbook ${playbookPath}"
                 }
             }
         }
