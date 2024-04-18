@@ -7,6 +7,7 @@
             This is <b>user registration and login system</b> build with django which is
             a Python-based free and open-source web framework for the Final Project of Devops Fundamental.
         <hr class="my-4">
+        
         <p class="lead">
             {% if user.is_authenticated %}
                 <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
