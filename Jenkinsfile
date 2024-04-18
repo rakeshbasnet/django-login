@@ -13,7 +13,7 @@ pipeline {
                   // Build Docker image
                     sh '''
                     echo 'Buid Docker Image'
-                    docker build -t ${DOCKER_REPO}:${BUILD_NUMBER} .
+                    docker build -t ${DOCKER_REPO}:${env.BUILD_NUMBER} .
                     echo 'Docker build successfully.'
                     '''
                 }
@@ -25,7 +25,7 @@ pipeline {
 
                     // Push Docker image to Docker Hub
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                        docker.image("${DOCKER_REPO}:${BUILD_NUMBER}").push('latest')
+                        docker.image("${DOCKER_REPO}:${env.BUILD_NUMBER}").push('latest')
                     }
                 }
             }
