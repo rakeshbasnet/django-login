@@ -24,9 +24,9 @@ pipeline {
                 script {
 
                     // Push Docker image to Docker Hub
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                    // docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
                         docker.image("${DOCKER_REPO}:${env.BUILD_NUMBER}").push('latest')
-                    }
+                    // }
                 }
             }
         }
